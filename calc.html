@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="EUC-KR">
+
+<title>Insert title here</title>
+
+<script type="text/javascript">
+
+	window.onload = function() {
+
+		document.getElementById("btnSend").onclick = chkData;
+
+	}
+
+
+
+	function chkData() {
+
+		if(frm.num1.value === ""){
+
+			frm.num1.focus();
+
+			alert("숫자1에 값을 입력하시오.");
+
+			return;
+
+		}
+
+
+
+		var regEx1 = /^[-]?\d*(\.?\d*)$/;
+
+		if(!frm.num1.value.match(regEx1)) {
+
+			frm.num1.focus();
+
+			alert("숫자1에는 숫자만 입력 가능합니다.");
+
+			frm.num1.value="";
+
+
+
+		}
+
+
+
+		if(frm.num2.value === ""){
+
+			frm.num2.focus();
+
+			alert("숫자2에 값을 입력하시오.");
+
+			return;
+
+		}
+
+
+
+		var regEx2 = /^[-]?\d*\.?\d*$/;
+
+		if(!frm.num2.value.match(regEx2)) {
+
+			frm.num2.focus();
+
+			alert("숫자2에는 숫자만 입력 가능합니다.");
+
+			frm.num2.value="";
+
+		}
+
+
+
+		var su1 = frm.num1.value;
+
+		var su2 = frm.num2.value;
+
+		var isOperCheck = false;
+
+
+
+		for(var i=0; i < frm.op.length; i++) {
+
+			if(frm.op[i].checked){
+
+				oper = (frm.op[i].id);
+
+				isOperCheck = true;
+
+			}
+
+		}
+
+		if(!isOperCheck){
+
+			alert("연산을 선택하세요");
+
+			return;
+
+		}
+
+		if(oper === "plus") {
+
+			oper="+";
+
+			document.getElementById("result").value = eval(su1 + oper + su2);
+
+		}else if(oper === "minus") {
+
+
+
+			if(su2 < 0) {
+
+				oper="+";
+
+				document.getElementById("result").value = eval(su1 + oper + -su2);
+
+				return;
+
+			}
+
+			oper="-";
+
+			document.getElementById("result").value = eval(su1 + oper + su2);
+
+		}else if(oper === "gop") {
+
+			oper="*";
+
+			document.getElementById("result").value = eval(su1 + oper + su2);
+
+		}else if(oper === "nanu") {
+
+			oper="/";
+
+			if(su1 === "0" || su2 === "0") {
+
+				alert("나누기엔 0이 들어갈수 없습니다.");
+
+				frm.num1.value="";
+
+				frm.num2.value="";
+
+				return;
+
+			}
+
+			document.getElementById("result").value = eval(su1 + oper + su2);
+
+		}
+
+
+
+	}
+
+
+
+</script>
+
+</head>
+
+<body>
+
+	<form name = "frm">
+
+		숫자1 : <input type="text" name="num1" /><br/>
+
+		숫자2 : <input type="text" name="num2" /><br/><br/>
+
+
+
+		연산 :
+
+		<label for="plus">+</label><input type="radio" name="op" id="plus"/>		<!--  name는 라디오버튼에 무엇이 체크되어 있는가를 확인하기 위해 -->
+
+		<label for="minus">-</label><input type="radio" name="op" id="minus"/>
+
+		<label for="gop">*</label><input type="radio" name="op" id="gop"/>
+
+		<label for="nanu">/</label><input type="radio" name="op" id="nanu"/>
+
+		<br/>
+
+
+
+		결과 : <input type="text" id="result" readonly="readonly"/>
+
+		<br/>
+
+
+
+		<input type="button" id="btnSend" value="계산"/>
+
+		<input type="reset" id="btnClear" value="지우개"/>
+
+	</form>
+
+</body>
+
+</html>
+
+
+
